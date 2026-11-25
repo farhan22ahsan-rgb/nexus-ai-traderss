@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1220">
+<title>NEXUS AI TRADER</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--card:#142238;--line:#293c55;--muted:#9aabc0;--gold:#e8c477;--green:#50d1a0;--red:#f28b8b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 70% -20%,#263b58,transparent 45%),var(--bg);color:#eef4fc;font:15px/1.5 system-ui, sans-serif}
+main{max-width:1050px;margin:auto;padding:18px 14px 60px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.brand{display:flex;align-items:center;gap:10px}.logo{background:linear-gradient(140deg,#f1d99a,#a77b35);color:#171717;border-radius:12px;padding:9px 13px;font-weight:900;font-size:21px}.brand b{letter-spacing:.13em}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.1em}.pill,.tag{border:1px solid #496044;color:#a7e6be;background:#172b28;border-radius:30px;padding:5px 9px;font-size:10px;letter-spacing:.08em}
+.notice{border:1px solid #715d31;background:#302817;color:#f2d99e;padding:12px;border-radius:12px;font-size:12px;margin-bottom:20px}.heading{display:flex;justify-content:space-between;align-items:end;margin:16px 0}.heading h1{font-size:23px;margin:0}.muted{color:var(--muted)}.small{font-size:11px}
+.tabs{display:flex;gap:6px;overflow:auto;margin:16px 0}.tab{background:transparent;border:1px solid transparent;color:var(--muted);padding:9px 12px;border-radius:9px;white-space:nowrap}.tab.active{color:var(--gold);background:#302b1e;border-color:#665633}
+.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.card{background:linear-gradient(145deg,#172943,#111d2e);border:1px solid var(--line);border-radius:15px;padding:15px;min-width:0}.label{color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}.value{font-size:24px;font-weight:750;margin-top:7px}.sub{color:var(--muted);font-size:11px}.two{display:grid;grid-template-columns:1.35fr 1fr;gap:11px;margin-top:12px}.card h3{font-size:14px;margin:0 0 13px}.chart{height:190px;border:1px solid var(--line);border-radius:10px;background:repeating-linear-gradient(0deg,transparent 0 37px,#26394f 38px),repeating-linear-gradient(90deg,transparent 0 55px,#26394f 56px);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;padding:15px}
+.line{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px}.line:last-child{border:0}.btns{display:flex;gap:8px;margin-top:14px}.btn{padding:10px 13px;border-radius:10px;border:1px solid var(--line);background:#20344f;color:#fff;font-weight:650}.primary{background:var(--gold);color:#191813;border-color:var(--gold)}.stop{color:#ffaaaa;border-color:#76434a;background:#321f29}.btn:disabled{opacity:.4}.hint{color:var(--muted);font-size:11px;margin-top:10px}.empty{text-align:center;padding:26px;color:var(--muted);font-size:12px}.range{width:100%;accent-color:var(--gold)}footer{text-align:center;color:#73869e;font-size:10px;margin-top:24px}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}.value{font-size:21px}.heading h1{font-size:21px}}
+</style>
+</head>
+<body><main>
+<header class="top"><div class="brand"><div class="logo">N</div><div><b>NEXUS AI</b><small>TRADING INTELLIGENCE</small></div></div><span class="pill">DEMO PROTOTYPE</span></header>
+<div class="notice"><b>Important:</b> This is a user-interface prototype only. It has no live price feed, MT5 connection, or order execution. Figures and chart area are placeholders.</div>
+<div class="heading"><div><div class="small muted">WORKSPACE / OVERVIEW</div><h1>Trading dashboard</h1></div><span class="tag">XAUUSD · M5</span></div>
+<nav class="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="analysis">AI analysis</button><button class="tab" data-tab="risk">Risk controls</button><button class="tab" data-tab="history">Trade history</button><button class="tab" data-tab="settings">Settings</button></nav>
+<section class="panel active" id="overview">
+<div class="grid">
+<div class="card"><div class="label">Account balance</div><div class="value">—</div><div class="sub">Demo account not connected</div></div>
+<div class="card"><div class="label">Today's P/L</div><div class="value">—</div><div class="sub">No account data</div></div>
+<div class="card"><div class="label">Open positions</div><div class="value">0</div><div class="sub">No trades running</div></div>
+<div class="card"><div class="label">Risk per trade</div><div class="value">1.0%</div><div class="sub">Planned setting only</div></div>
+</div>
+<div class="two"><div class="card"><h3>XAUUSD market view</h3><div class="chart">Market chart will appear here after a verified data feed is connected.</div><p class="hint">No live prices or signals are shown in this version.</p></div>
+<div class="card"><h3>Bot controls <span class="tag" id="state">STOPPED</span></h3><div class="line"><span class="muted">Execution</span><b>Disabled</b></div><div class="line"><span class="muted">MT5 connection</span><b>Not connected</b></div><div class="line"><span class="muted">Strategy</span><b>XAUUSD M5</b></div><div class="btns"><button class="btn primary" id="start">Start preview</button><button class="btn stop" id="stop" disabled>Stop</button></div><p class="hint" id="message" aria-live="polite">Preview only. This button cannot place orders.</p></div></div>
+</section>
+<section class="panel" id="analysis"><div class="card"><h3>Market analysis</h3><div class="line"><span class="muted">Instrument</span><b>XAUUSD</b></div><div class="line"><span class="muted">Entry timeframe</span><b>M5</b></div><div class="line"><span class="muted">Trend confirmation</span><b>M15</b></div><div class="line"><span class="muted">Current signal</span><b>Waiting for data</b></div><div class="line"><span class="muted">AI assessment</span><b>Unavailable</b></div><p class="hint">No BUY or SELL recommendation is generated. A strategy must be specified and tested against historical data first.</p></div></section>
+<section class="panel" id="risk"><div class="card"><h3>Risk management · draft settings</h3><div class="line"><span>Risk per trade</span><b id="riskValue">1.00%</b></div><input class="range" id="risk" type="range" min=".25" max="1" step=".25" value="1"><div class="line"><span>Maximum open positions</span><b>1</b></div><div class="line"><span>Daily loss lockout target</span><b>2%</b></div><div class="line"><span>Maximum trades per day</span><b>3</b></div><div class="line"><span>Emergency stop</span><b>Required</b></div><p class="hint">These settings are not yet enforced by a trading engine. Planned risk is not a guaranteed maximum loss; slippage and gaps can increase losses.</p></div></section>
+<section class="panel" id="history"><div class="card"><h3>Trade history</h3><div class="empty">No trades recorded.<br>Demo execution is not connected.</div></div></section>
+<section class="panel" id="settings"><div class="card"><h3>Application settings</h3><div class="line"><span>Market</span><b>XAUUSD</b></div><div class="line"><span>Entry timeframe</span><b>M5</b></div><div class="line"><span>Confirmation timeframe</span><b>M15</b></div><div class="line"><span>Trading mode</span><b>Demo only</b></div><div class="line"><span>Credentials</span><b>Not stored</b></div><p class="hint">Never commit broker passwords, API keys, investor passwords or account numbers to this repository.</p></div></section>
+<footer>NEXUS AI TRADER · V1.0 UI PROTOTYPE · EXPERIMENTAL SOFTWARE</footer>
+</main>
+<script>
+const tabs=[...document.querySelectorAll('.tab')],panels=[...document.querySelectorAll('.panel')];
+tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.toggle('active',x===t));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}));
+const start=document.getElementById('start'),stop=document.getElementById('stop');
+start.addEventListener('click',()=>{document.getElementById('state').textContent='PREVIEW ON';start.disabled=true;stop.disabled=false;document.getElementById('message').textContent='Preview active. No market data is read and no orders can be placed.';});
+stop.addEventListener('click',()=>{document.getElementById('state').textContent='STOPPED';start.disabled=false;stop.disabled=true;document.getElementById('message').textContent='Preview stopped. No trades were placed.';});
+document.getElementById('risk').addEventListener('input',e=>document.getElementById('riskValue').textContent=Number(e.target.value).toFixed(2)+'%');
+</script></body></html>
