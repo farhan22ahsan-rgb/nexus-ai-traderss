@@ -31,7 +31,7 @@ main{max-width:1050px;margin:auto;padding:18px 14px 60px}.top{display:flex;justi
 </section>
 
 <section class="panel" id="demo">
-  <div class="notice"><b>SIMULATION ONLY:</b> All prices, candles, signals and trades on this page are generated in your browser. They are not Exness quotes, not financial advice, and cannot place MT5 orders.</div>
+  <div class="notice"><b>SIMULATION ONLY:</b> All prices, signals and trades on this page are generated in your browser. Price updates are accelerated and are not real five-minute candles. They are not Exness quotes, not financial advice, and cannot place MT5 orders.</div>
   <div class="grid">
     <div class="card"><div class="label">Synthetic XAUUSD price</div><div class="value" id="simPrice">2,500.00</div><div class="sub">SIMULATED · NOT LIVE</div></div>
     <div class="card"><div class="label">Demo balance</div><div class="value" id="simBalance">$10,000.00</div><div class="sub">Virtual starting balance</div></div>
@@ -40,7 +40,7 @@ main{max-width:1050px;margin:auto;padding:18px 14px 60px}.top{display:flex;justi
   </div>
   <div class="two">
     <div class="card">
-      <h3>Simulated M5 price movement</h3>
+      <h3>Synthetic price movement</h3>
       <div class="chart" style="height:210px;display:block;padding:8px">
         <svg viewBox="0 0 600 180" width="100%" height="100%" role="img" aria-label="Synthetic price line chart">
           <g stroke="#2b405a" stroke-width="1"><path d="M0 30H600 M0 75H600 M0 120H600 M0 165H600"/></g>
@@ -52,7 +52,7 @@ main{max-width:1050px;margin:auto;padding:18px 14px 60px}.top{display:flex;justi
     </div>
     <div class="card">
       <h3>Paper trade controls</h3>
-      <div class="line"><span class="muted">Signal method</span><b>EMA 9 / EMA 21 demo rule</b></div>
+      <div class="line"><span class="muted">Signal method</span><b>Basic EMA 9 / 21 crossover</b></div>
       <div class="line"><span class="muted">Risk budget</span><b id="simRisk">$100.00 (1%)</b></div>
       <div class="line"><span class="muted">Stop distance</span><b id="simStopDist">$2.00 (illustrative)</b></div>
       <div class="line"><span class="muted">Take-profit distance</span><b>$3.00 (1.5R)</b></div>
@@ -71,7 +71,7 @@ main{max-width:1050px;margin:auto;padding:18px 14px 60px}.top{display:flex;justi
   </div>
   <div class="card" style="margin-top:11px">
     <h3>Paper trade history</h3>
-    <div id="simHistory" class="empty">No simulated trades yet.</div>
+    <div id="simHistory" class="empty">No simulated trades yet. Reloading this page resets the virtual balance and history.</div>
   </div>
 </section>
 
@@ -140,7 +140,7 @@ document.getElementById('riskSlider').addEventListener('input',e=>document.getEl
    $('simPnl').style.color=dayPnl>=0?'var(--green)':'var(--red)';
    $('simSignal').textContent=s;
    $('simSignal').style.color=s==='BUY'?'var(--green)':s==='SELL'?'var(--red)':'var(--gold)';
-   $('simSignalNote').textContent='Synthetic EMA crossover · not a live signal';
+   $('simSignalNote').textContent='Basic EMA crossover · accelerated simulation, not M5 candle data';
    $('simRisk').textContent=fmt(balance*riskPct())+' ('+(riskPct()*100).toFixed(2)+'%)';
    $('simPosition').textContent=position?(position.side+' @ '+position.entry.toFixed(2)):'None';
    $('simBuy').disabled=!!position||!running||tradesToday>=3||dayPnl<=-startingBalance*.02;
