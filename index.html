@@ -18,7 +18,7 @@ main{max-width:1050px;margin:auto;padding:18px 14px 60px}.top{display:flex;justi
 <header class="top"><div class="brand"><div class="logo">N</div><div><b>NEXUS AI</b><small>TRADING INTELLIGENCE</small></div></div><span class="pill">DEMO PROTOTYPE</span></header>
 <div class="notice"><b>Important:</b> This is a user-interface prototype only. It has no live price feed, MT5 connection, or order execution. Figures and chart area are placeholders.</div>
 <div class="heading"><div><div class="small muted">WORKSPACE / OVERVIEW</div><h1>Trading dashboard</h1></div><span class="tag">XAUUSD · M5</span></div>
-<nav class="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="analysis">AI analysis</button><button class="tab" data-tab="risk">Risk controls</button><button class="tab" data-tab="history">Trade history</button><button class="tab" data-tab="settings">Settings</button><button class="tab" data-tab="connect">Connect MT5</button></nav>
+<nav class="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="demo">Demo mode</button><button class="tab" data-tab="analysis">AI analysis</button><button class="tab" data-tab="risk">Risk controls</button><button class="tab" data-tab="history">Trade history</button><button class="tab" data-tab="settings">Settings</button><button class="tab" data-tab="connect">Connect MT5</button></nav>
 <section class="panel active" id="overview">
 <div class="grid">
 <div class="card"><div class="label">Account balance</div><div class="value">—</div><div class="sub">Demo account not connected</div></div>
@@ -29,8 +29,54 @@ main{max-width:1050px;margin:auto;padding:18px 14px 60px}.top{display:flex;justi
 <div class="two"><div class="card"><h3>XAUUSD market view</h3><div class="chart">Market chart will appear here after a verified data feed is connected.</div><p class="hint">No live prices or signals are shown in this version.</p></div>
 <div class="card"><h3>Bot controls <span class="tag" id="state">STOPPED</span></h3><div class="line"><span class="muted">Execution</span><b>Disabled</b></div><div class="line"><span class="muted">MT5 connection</span><b>Not connected</b></div><div class="line"><span class="muted">Strategy</span><b>XAUUSD M5</b></div><div class="btns"><button class="btn primary" id="start">Start preview</button><button class="btn stop" id="stop" disabled>Stop</button></div><p class="hint" id="message" aria-live="polite">Preview only. This button cannot place orders.</p></div></div>
 </section>
+
+<section class="panel" id="demo">
+  <div class="notice"><b>SIMULATION ONLY:</b> All prices, candles, signals and trades on this page are generated in your browser. They are not Exness quotes, not financial advice, and cannot place MT5 orders.</div>
+  <div class="grid">
+    <div class="card"><div class="label">Synthetic XAUUSD price</div><div class="value" id="simPrice">2,500.00</div><div class="sub">SIMULATED · NOT LIVE</div></div>
+    <div class="card"><div class="label">Demo balance</div><div class="value" id="simBalance">$10,000.00</div><div class="sub">Virtual starting balance</div></div>
+    <div class="card"><div class="label">Today's simulated P/L</div><div class="value" id="simPnl">$0.00</div><div class="sub">Paper trading only</div></div>
+    <div class="card"><div class="label">Signal state</div><div class="value" id="simSignal">WAIT</div><div class="sub" id="simSignalNote">Waiting for simulation</div></div>
+  </div>
+  <div class="two">
+    <div class="card">
+      <h3>Simulated M5 price movement</h3>
+      <div class="chart" style="height:210px;display:block;padding:8px">
+        <svg viewBox="0 0 600 180" width="100%" height="100%" role="img" aria-label="Synthetic price line chart">
+          <g stroke="#2b405a" stroke-width="1"><path d="M0 30H600 M0 75H600 M0 120H600 M0 165H600"/></g>
+          <polyline id="simLine" points="" fill="none" stroke="#e8c477" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="btns"><button class="btn primary" id="simStart">Start simulation</button><button class="btn stop" id="simStop" disabled>Pause</button></div>
+      <p class="hint" id="simStatus" aria-live="polite">Paused. Press Start simulation to generate artificial price movement.</p>
+    </div>
+    <div class="card">
+      <h3>Paper trade controls</h3>
+      <div class="line"><span class="muted">Signal method</span><b>EMA 9 / EMA 21 demo rule</b></div>
+      <div class="line"><span class="muted">Risk budget</span><b id="simRisk">$100.00 (1%)</b></div>
+      <div class="line"><span class="muted">Stop distance</span><b id="simStopDist">$2.00 (illustrative)</b></div>
+      <div class="line"><span class="muted">Take-profit distance</span><b>$3.00 (1.5R)</b></div>
+      <div class="line"><span class="muted">Open paper position</span><b id="simPosition">None</b></div>
+      <div class="btns"><button class="btn primary" id="simBuy" disabled>Paper BUY</button><button class="btn stop" id="simSell" disabled>Paper SELL</button></div>
+      <button class="btn" id="simClose" style="width:100%;margin-top:8px" disabled>Close paper trade</button>
+      <p class="hint">Signals are generated from synthetic prices only. The displayed risk budget is a simulation estimate, not a broker-calculated lot size. Contract specifications and execution costs are not modelled.</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:11px">
+    <h3>Simulation safeguards</h3>
+    <div class="line"><span>Max paper trades per day</span><b>3</b></div>
+    <div class="line"><span>Daily loss lockout</span><b>2% of virtual starting balance ($200)</b></div>
+    <div class="line"><span>Maximum simultaneous positions</span><b>1</b></div>
+    <div class="line"><span>Live MT5 execution</span><b>Not connected / disabled</b></div>
+  </div>
+  <div class="card" style="margin-top:11px">
+    <h3>Paper trade history</h3>
+    <div id="simHistory" class="empty">No simulated trades yet.</div>
+  </div>
+</section>
+
 <section class="panel" id="analysis"><div class="card"><h3>Market analysis</h3><div class="line"><span class="muted">Instrument</span><b>XAUUSD</b></div><div class="line"><span class="muted">Entry timeframe</span><b>M5</b></div><div class="line"><span class="muted">Trend confirmation</span><b>M15</b></div><div class="line"><span class="muted">Current signal</span><b>Waiting for data</b></div><div class="line"><span class="muted">AI assessment</span><b>Unavailable</b></div><p class="hint">No BUY or SELL recommendation is generated. A strategy must be specified and tested against historical data first.</p></div></section>
-<section class="panel" id="risk"><div class="card"><h3>Risk management · draft settings</h3><div class="line"><span>Risk per trade</span><b id="riskValue">1.00%</b></div><input class="range" id="risk" type="range" min=".25" max="1" step=".25" value="1"><div class="line"><span>Maximum open positions</span><b>1</b></div><div class="line"><span>Daily loss lockout target</span><b>2%</b></div><div class="line"><span>Maximum trades per day</span><b>3</b></div><div class="line"><span>Emergency stop</span><b>Required</b></div><p class="hint">These settings are not yet enforced by a trading engine. Planned risk is not a guaranteed maximum loss; slippage and gaps can increase losses.</p></div></section>
+<section class="panel" id="risk"><div class="card"><h3>Risk management · draft settings</h3><div class="line"><span>Risk per trade</span><b id="riskValue">1.00%</b></div><input class="range" id="riskSlider" type="range" min=".25" max="1" step=".25" value="1"><div class="line"><span>Maximum open positions</span><b>1</b></div><div class="line"><span>Daily loss lockout target</span><b>2%</b></div><div class="line"><span>Maximum trades per day</span><b>3</b></div><div class="line"><span>Emergency stop</span><b>Required</b></div><p class="hint">These settings are not yet enforced by a trading engine. Planned risk is not a guaranteed maximum loss; slippage and gaps can increase losses.</p></div></section>
 <section class="panel" id="history"><div class="card"><h3>Trade history</h3><div class="empty">No trades recorded.<br>Demo execution is not connected.</div></div></section>
 <section class="panel" id="settings"><div class="card"><h3>Application settings</h3><div class="line"><span>Market</span><b>XAUUSD</b></div><div class="line"><span>Entry timeframe</span><b>M5</b></div><div class="line"><span>Confirmation timeframe</span><b>M15</b></div><div class="line"><span>Trading mode</span><b>Demo only</b></div><div class="line"><span>Credentials</span><b>Not stored</b></div><p class="hint">Never commit broker passwords, API keys, investor passwords or account numbers to this repository.</p></div></section>
 <section class="panel" id="connect">
@@ -66,5 +112,78 @@ tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.togg
 const start=document.getElementById('start'),stop=document.getElementById('stop');
 start.addEventListener('click',()=>{document.getElementById('state').textContent='PREVIEW ON';start.disabled=true;stop.disabled=false;document.getElementById('message').textContent='Preview active. No market data is read and no orders can be placed.';});
 stop.addEventListener('click',()=>{document.getElementById('state').textContent='STOPPED';start.disabled=false;stop.disabled=true;document.getElementById('message').textContent='Preview stopped. No trades were placed.';});
-document.getElementById('risk').addEventListener('input',e=>document.getElementById('riskValue').textContent=Number(e.target.value).toFixed(2)+'%');
+document.getElementById('riskSlider').addEventListener('input',e=>document.getElementById('riskValue').textContent=Number(e.target.value).toFixed(2)+'%');
+
+/* Browser-only synthetic market simulator. It never connects to a broker. */
+(()=>{
+ const $=id=>document.getElementById(id);
+ const startingBalance=10000;
+ let balance=startingBalance, dayPnl=0, tradesToday=0, position=null, running=false, timer=null;
+ let prices=Array.from({length:45},(_,i)=>2500+Math.sin(i/4)*2+(Math.random()-.5)*1.5);
+ let history=[];
+ const riskPct=()=>Number($('riskSlider').value)/100;
+ const fmt=n=>'</html>+n.toFixed(2);
+ const current=()=>prices[prices.length-1];
+ const ema=(arr,period)=>{const k=2/(period+1);let v=arr[0];for(let i=1;i<arr.length;i++)v=arr[i]*k+v*(1-k);return v;};
+ function signal(){
+   const fast=ema(prices.slice(-30),9), slow=ema(prices.slice(-40),21);
+   const prevFast=ema(prices.slice(-31,-1),9), prevSlow=ema(prices.slice(-41,-1),21);
+   if(prevFast<=prevSlow && fast>slow) return 'BUY';
+   if(prevFast>=prevSlow && fast<slow) return 'SELL';
+   return 'WAIT';
+ }
+ function render(){
+   const p=current(), s=signal();
+   $('simPrice').textContent=p.toFixed(2);
+   $('simBalance').textContent=fmt(balance);
+   $('simPnl').textContent=fmt(dayPnl);
+   $('simPnl').style.color=dayPnl>=0?'var(--green)':'var(--red)';
+   $('simSignal').textContent=s;
+   $('simSignal').style.color=s==='BUY'?'var(--green)':s==='SELL'?'var(--red)':'var(--gold)';
+   $('simSignalNote').textContent='Synthetic EMA crossover · not a live signal';
+   $('simRisk').textContent=fmt(balance*riskPct())+' ('+(riskPct()*100).toFixed(2)+'%)';
+   $('simPosition').textContent=position?(position.side+' @ '+position.entry.toFixed(2)):'None';
+   $('simBuy').disabled=!!position||!running||tradesToday>=3||dayPnl<=-startingBalance*.02;
+   $('simSell').disabled=$('simBuy').disabled;
+   $('simClose').disabled=!position;
+   $('simStopDist').textContent='$2.00 (illustrative)';
+   const min=Math.min(...prices), max=Math.max(...prices), span=Math.max(max-min,.1);
+   const pts=prices.map((v,i)=>(i/(prices.length-1))*600+','+(165-((v-min)/span)*150)).join(' ');
+   $('simLine').setAttribute('points',pts);
+   $('simHistory').innerHTML=history.length?history.slice().reverse().map(t=>'<div class="line"><span>'+t.side+' · '+t.entry.toFixed(2)+' → '+t.exit.toFixed(2)+'</span><b style="color:'+(t.pnl>=0?'var(--green)':'var(--red)')+'">'+(t.pnl>=0?'+':'')+fmt(t.pnl)+'</b></div>').join(''):'No simulated trades yet.';
+ }
+ function finish(exitPrice,reason){
+   if(!position)return;
+   const move=position.side==='BUY'?exitPrice-position.entry:position.entry-exitPrice;
+   const pnl=(move/position.stopDistance)*position.riskCash;
+   balance+=pnl;dayPnl+=pnl;
+   history.push({side:position.side,entry:position.entry,exit:exitPrice,pnl,reason});
+   position=null;render();
+ }
+ function tick(){
+   const last=current(), drift=(Math.random()-.49)*1.25;
+   prices.push(last+drift);if(prices.length>70)prices.shift();
+   if(position){
+     const p=current();
+     if(position.side==='BUY'&&p<=position.sl)finish(position.sl,'SL');
+     else if(position.side==='BUY'&&p>=position.tp)finish(position.tp,'TP');
+     else if(position.side==='SELL'&&p>=position.sl)finish(position.sl,'SL');
+     else if(position.side==='SELL'&&p<=position.tp)finish(position.tp,'TP');
+   }
+   render();
+ }
+ function open(side){
+   if(position||!running||tradesToday>=3||dayPnl<=-startingBalance*.02)return;
+   const entry=current(), riskCash=balance*riskPct(), dist=2, reward=dist*1.5;
+   position={side,entry,riskCash,stopDistance:dist,sl:entry+(side==='BUY'?-dist:dist),tp:entry+(side==='BUY'?reward:-reward)};
+   tradesToday++;render();
+ }
+ $('simStart').addEventListener('click',()=>{if(running)return;running=true;$('simStatus').textContent='Running synthetic price simulation. No broker data or orders.';$('simStart').disabled=true;$('simStop').disabled=false;timer=setInterval(tick,2500);render();});
+ $('simStop').addEventListener('click',()=>{running=false;clearInterval(timer);timer=null;$('simStatus').textContent='Simulation paused. Open paper trades remain open until closed or simulation resumes.';$('simStart').disabled=false;$('simStop').disabled=true;render();});
+ $('simBuy').addEventListener('click',()=>open('BUY'));
+ $('simSell').addEventListener('click',()=>open('SELL'));
+ $('simClose').addEventListener('click',()=>finish(current(),'Manual close'));
+ render();
+})();
+
 </script></body></html>
